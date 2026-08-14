@@ -41,8 +41,20 @@ Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained *
 ### 1. Pre-trained VLM
 π₀ builds its VLM backbone on **PaliGemma**, which consists of:
 
-* **SigLIP (~400M)** as the vision encoder
-* **Gemma (~2.6B)** as the language-model backbone
+* **SigLIP**: A **ViT (Vision Transformer)** used as the vision encoder. It converts input images into image tokens. A **linear projection layer** then maps these image tokens to the same embedding dimension as the Gemma text tokens, allowing them to be processed together.
+
+* **Gemma**: A **decoder-only Transformer** used as the language-model backbone. It jointly processes the projected image tokens and text tokens to produce contextual visual-language representations.
+
+> [!NOTE]
+> **SigLIP**
+> Image → Image Tokens
+> 
+> **Gemma**
+> Image Tokens + Text Tokens → Contextual Representations
+
+<p align="center">
+  <img src="Assets/PaliGemma.jpg" width="800">
+</p>
 
 ### 2. Action Expert
 
