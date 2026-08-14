@@ -38,17 +38,17 @@ For each timestep, the same action can be predicted multiple times from overlapp
 
 These predictions are combined using a **weighted average**, with more recent predictions receiving higher weights.
 
-> [!NOTE]
-> **Action Chunking** → predicts multiple future actions at once
-> 
-> **CVAE** → models different possible expert behaviors
-> 
-> **Temporal Ensembling** → combines overlapping action predictions for smoother control
-
 <p align="center">
   <img src="Assets/algo.jpg" width="900">
 </p>
 
+> [!NOTE]
+> **Training:**  
+> Expert Actions → CVAE Encoder → $z$  
+> Image Features (CNN) + Joint State + $z$ → Transformer → Action Chunk
+>
+> **Inference:**  
+> Image Features (CNN) + Joint State + $z=0$ → Transformer → Action Chunk
 
 <p align="center">
   <img src="Assets/detail_architecture.jpg" width="900">
