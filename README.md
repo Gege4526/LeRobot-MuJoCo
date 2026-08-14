@@ -5,23 +5,53 @@
 
 ### 1. Action Chunking
 
-In ACT, the **chunk size** is initially set to a fixed value \(k\).
+ACT predicts a **chunk of (k) future actions** instead of predicting only one action at a time.
 
-Every \(k\) timesteps, the agent receives the current observation and predicts the **next \(k\) actions** at once. These predicted actions are then executed sequentially.
+$$
+A_t=[a_t,a_{t+1},...,a_{t+k-1}]
+$$
 
-### 2. Temporal Ensembling
+### 2. CVAE
 
-For each timestep, the same action can be predicted up to **\(k\) times** from different action chunks.
+ACT uses a **Conditional Variational Autoencoder (CVAE)** to model variations in expert demonstrations.
+
+During training, the expert action sequence is encoded into a **latent variable (z)**, which captures different possible action styles or behaviors.
+
+$$
+\text{Demonstration} \rightarrow \text{Encoder} \rightarrow z
+$$
+
+The Transformer then predicts the action chunk conditioned on the observation and (z):
+
+$$
+(\text{Observation},z) \rightarrow \text{Action Chunk}
+$$
+
+This helps reduce **behavior averaging** when multiple valid actions exist for the same observation.
+
+> [!IMPORTANT]
+> **CVAE** → models variations in expert demonstrations and helps handle multimodal actions.
+
+### 3. Temporal Ensembling
+
+For each timestep, the same action can be predicted multiple times from overlapping action chunks.
 
 These predictions are combined using a **weighted average**, with more recent predictions receiving higher weights.
 
+> [!NOTE]
+> **Action Chunking** → predicts multiple future actions at once
+> 
+> **CVAE** → models different possible expert behaviors
+> 
+> **Temporal Ensembling** → combines overlapping action predictions for smoother control
+
 <p align="center">
-  <img src="Assets/algo.jpg" width="800">
+  <img src="Assets/algo.jpg" width="900">
 </p>
 
 
 <p align="center">
-  <img src="Assets/detail_architecture.jpg" width="800">
+  <img src="Assets/detail_architecture.jpg" width="900">
 </p>
 
 ### Reference
@@ -35,7 +65,7 @@ https://arxiv.org/abs/2304.13705
 Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained **VLM** with a specialized **action expert** to generate continuous robot actions.
 
 <p align="center">
-  <img src="Assets/overview_pi0.jpg" width="800">
+  <img src="Assets/overview_pi0.jpg" width="900">
 </p>
 
 ### 1. Pre-trained VLM
@@ -56,8 +86,18 @@ Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained *
   <img src="Assets/PaliGemma.jpg" width="800">
 </p>
 
-### 2. Action Expert
+> [!IMPORTANT]
+> π₀ extends **PaliGemma** with three main modifications:
+>
+> 1. **Robot State & Action Projection** – maps continuous robot states and actions into Transformer representations.
+> 2. **Flow-Matching Time Embedding** – encodes the flow timestep $\tau$ using an additional MLP.
+> 3. **Action Expert** – a smaller Transformer specialized for continuous robot action generation.
 
+
+
+### 2. Action Expert
+conditional flow matching
+action chunk
 
 ### Reference
 **Paper**
