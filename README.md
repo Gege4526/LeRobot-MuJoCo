@@ -6,7 +6,12 @@
 Instead of predicting only one action at each timestep, ACT predicts a **chunk of future actions** using a Transformer-based policy.
 
 <p align="center">
-  <img src="Assets/detail_architecture_page-0001.jpg" width="800">
+  <img src="Assets/algo.jpg" width="800">
+</p>
+
+
+<p align="center">
+  <img src="Assets/detail_architecture.jpg" width="800">
 </p>
 
 **Paper**
