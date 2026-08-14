@@ -1,5 +1,5 @@
 # Training ACT, SmolVLA, and Pi0 with LeRobot in MuJoCo
-## ACT — Action Chunking with Transformers
+## 🤖 ACT — Action Chunking with Transformers
 
 **ACT (Action Chunking with Transformers)** is an **imitation learning** method designed for robotic manipulation tasks.
 
@@ -24,6 +24,43 @@ These predictions are combined using a **weighted average**, with more recent pr
   <img src="Assets/detail_architecture.jpg" width="800">
 </p>
 
+### Reference
 **Paper**
 https://arxiv.org/abs/2304.13705
+
+## 🤖 π₀ 
+
+**π₀** is a **VLA** model developed by Physical Intelligence for general-purpose robot control.
+
+Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained **VLM** with a specialized **action expert** to generate continuous robot actions.
+
+<p align="center">
+  <img src="Assets/overview_pi0.jpg" width="800">
+</p>
+
+### 1. Pre-trained VLM
+π₀ builds its VLM backbone on **PaliGemma**, which consists of:
+
+* **SigLIP (~400M)** as the vision encoder
+* **Gemma (~2.6B)** as the language-model backbone
+
+### 2. Action Expert
+
+
+### Reference
+**Paper**
+https://arxiv.org/abs/2410.24164
+
+**Blog**
+https://www.pi.website/blog/pi0
+
+## 🤖 SmolVLA
+
+### Reference
+**Paper**https://arxiv.org/abs/2506.01844
+
+**Blog**
+https://huggingface.co/blog/smolvla
+
+
 
