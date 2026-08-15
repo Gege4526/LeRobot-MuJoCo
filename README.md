@@ -1,5 +1,23 @@
 # Training ACT, SmolVLA, and Pi0 with LeRobot in MuJoCo
 
+## Table of Contents
+- [Setup](#setup)
+- [1. Collect Demonstration Data](#1-collect-demonstration-data)
+- [2. Playback Your Data](#2-playback-your-data)
+- [3. Train Action Chunking Transformer (ACT)](#3-train-action-chunking-transformer-act)
+- [📚 Theory](#-theory)
+  - [ACT — Action Chunking with Transformers](#act--action-chunking-with-transformers)
+    - [1. Action Chunking](#1-action-chunking)
+    - [2. CVAE](#2-cvae)
+    - [3. Temporal Ensembling](#3-temporal-ensembling)
+    - [Reference](#reference)
+  - [π₀](#π₀)
+    - [1. Pre-trained VLM](#1-pre-trained-vlm)
+    - [2. Action Expert](#2-action-expert)
+    - [Reference](#reference-1)
+  - [SmolVLA](#smolvla)
+    - [Reference](#reference-2)
+
 ## Setup
 ```bash
 conda create -n py310 python=3.10
@@ -46,12 +64,75 @@ The rendered observation contains four views:
 * **Top-left:** Side view
 * **Bottom-left:** Top-down view
 
+### Data Structure
+```bash
+fps = 20,
+features={
+    "observation.image": {
+        "dtype": "image",
+        "shape": (256, 256, 3),
+        "names": ["height", "width", "channels"],
+    },
+    "observation.wrist_image": {
+        "dtype": "image",
+        "shape": (256, 256, 3),
+        "names": ["height", "width", "channel"],
+    },
+    "observation.state": {
+        "dtype": "float32",
+        "shape": (6,),
+        "names": ["state"], # x, y, z, roll, pitch, yaw
+    },
+    "action": {
+        "dtype": "float32",
+        "shape": (7,),
+        "names": ["action"], # 6 个关节角 + 1 个夹爪
+    },
+    "obj_init": {
+        "dtype": "float32",
+        "shape": (6,),
+        "names": ["obj_init"], # 仅物体初始位置，训练中不使用
+    },
+},
+```
 
-## 🤖 ACT — Action Chunking with Transformers
+## 2. Playback Your Data
+
+Run `2.visualize_data.ipynb` to replay and inspect the collected demonstration data.
+
+The main MuJoCo window reconstructs the simulation scene and replays the recorded robot actions.
+
+The overlaid images show the observations stored in the dataset:
+
+* **Top-right:** Agent-view image from the dataset
+* **Bottom-right:** Wrist-camera image from the dataset
+
+This allows you to verify that the recorded actions and visual observations are correctly synchronized.
+
+## 3. Train Action Chunking Transformer (ACT)
+
+Run `3.train.ipynb` to train an **Action Chunking Transformer (ACT)** on the collected demonstration dataset.
+
+Training takes approximately **30–60 minutes**, depending on your hardware and dataset size.
+
+In this example, ACT is trained with:
+
+```python
+chunk_size = 10
+```
+
+The trained checkpoint will be saved to:
+
+```text
+./ckpt/act_y
+```
+
+## 📚 Theory
+###  ACT — Action Chunking with Transformers
 
 **ACT (Action Chunking with Transformers)** is an **imitation learning** method designed for robotic manipulation tasks.
 
-### 1. Action Chunking
+#### 1. Action Chunking
 
 ACT predicts a **chunk of (k) future actions** instead of predicting only one action at a time.
 
@@ -59,7 +140,7 @@ $$
 A_t=[a_t,a_{t+1},...,a_{t+k-1}]
 $$
 
-### 2. CVAE
+#### 2. CVAE
 
 ACT uses a **Conditional Variational Autoencoder (CVAE)** to model variations in expert demonstrations.
 
@@ -80,7 +161,7 @@ This helps reduce **behavior averaging** when multiple valid actions exist for t
 > [!IMPORTANT]
 > **CVAE** → models variations in expert demonstrations and helps handle multimodal actions.
 
-### 3. Temporal Ensembling
+#### 3. Temporal Ensembling
 
 For each timestep, the same action can be predicted multiple times from overlapping action chunks.
 
@@ -102,11 +183,11 @@ These predictions are combined using a **weighted average**, with more recent pr
   <img src="Assets/detail_architecture.jpg" width="900">
 </p>
 
-### Reference
+#### Reference
 **Paper**
 https://arxiv.org/abs/2304.13705
 
-## 🤖 π₀ 
+###  π₀ 
 
 **π₀** is a **VLA** model developed by Physical Intelligence for general-purpose robot control.
 
@@ -116,7 +197,7 @@ Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained *
   <img src="Assets/overview_pi0.jpg" width="900">
 </p>
 
-### 1. Pre-trained VLM
+#### 1. Pre-trained VLM
 π₀ builds its VLM backbone on **PaliGemma**, which consists of:
 
 * **SigLIP**: A **ViT (Vision Transformer)** used as the vision encoder. It converts input images into image tokens. A **linear projection layer** then maps these image tokens to the same embedding dimension as the Gemma text tokens, allowing them to be processed together.
@@ -142,21 +223,20 @@ Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained *
 > 3. **Action Expert** – a smaller Transformer specialized for continuous robot action generation.
 
 
-
-### 2. Action Expert
+#### 2. Action Expert
 conditional flow matching
 action chunk
 
-### Reference
+#### Reference
 **Paper**
 https://arxiv.org/abs/2410.24164
 
 **Blog**
 https://www.pi.website/blog/pi0
 
-## 🤖 SmolVLA
+###  SmolVLA
 
-### Reference
+#### Reference
 **Paper**https://arxiv.org/abs/2506.01844
 
 **Blog**
