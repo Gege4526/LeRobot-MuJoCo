@@ -1,4 +1,10 @@
 # Training ACT, SmolVLA, and Pi0 with LeRobot in MuJoCo
+
+## Setup
+```bash
+conda create -n py310 python=3.10
+```
+
 ## 🤖 ACT — Action Chunking with Transformers
 
 **ACT (Action Chunking with Transformers)** is an **imitation learning** method designed for robotic manipulation tasks.
