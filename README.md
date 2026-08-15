@@ -6,16 +6,16 @@
 - [2. Playback Your Data](#2-playback-your-data)
 - [3. Train Action Chunking Transformer (ACT)](#3-train-action-chunking-transformer-act)
 - [📚 Theory](#-theory)
-  - [ACT — Action Chunking with Transformers](#act--action-chunking-with-transformers)
+  - [➡️ ACT — Action Chunking with Transformers](#️-act--action-chunking-with-transformers)
     - [1. Action Chunking](#1-action-chunking)
     - [2. CVAE](#2-cvae)
     - [3. Temporal Ensembling](#3-temporal-ensembling)
     - [Reference](#reference)
-  - [π₀](#π₀)
+  - [➡️ Pi0](#️-pi0)
     - [1. Pre-trained VLM](#1-pre-trained-vlm)
     - [2. Action Expert](#2-action-expert)
     - [Reference](#reference-1)
-  - [SmolVLA](#smolvla)
+  - [➡️ SmolVLA](#️-smolvla)
     - [Reference](#reference-2)
 
 ## Setup
@@ -128,7 +128,7 @@ The trained checkpoint will be saved to:
 ```
 
 ## 📚 Theory
-###  ACT — Action Chunking with Transformers
+### ➡️ ACT — Action Chunking with Transformers
 
 **ACT (Action Chunking with Transformers)** is an **imitation learning** method designed for robotic manipulation tasks.
 
@@ -187,7 +187,7 @@ These predictions are combined using a **weighted average**, with more recent pr
 **Paper**
 https://arxiv.org/abs/2304.13705
 
-###  π₀ 
+### ➡️ Pi0 
 
 **π₀** is a **VLA** model developed by Physical Intelligence for general-purpose robot control.
 
@@ -234,7 +234,7 @@ https://arxiv.org/abs/2410.24164
 **Blog**
 https://www.pi.website/blog/pi0
 
-###  SmolVLA
+### ➡️ SmolVLA
 
 #### Reference
 **Paper**https://arxiv.org/abs/2506.01844
