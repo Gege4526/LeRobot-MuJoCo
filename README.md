@@ -12,12 +12,40 @@ pip install -r requirements.txt
 conda install jupyterlab
 pip install ipywidgets ipykernel
 python -m ipykernel install --user --name py310 --display-name "py310"
-jupyter lab .
+code .
 ```
 ```bash
 cd asset/objaverse
 unzip plate_11.zip
 ```
+## 1. Collect Demonstration Data
+
+Run the `1.collect_data.ipynb` notebook to collect demonstration data in the provided environment.
+
+The task is to **pick up the cup and place it onto the plate**. The environment considers the task successful when:
+
+* The cup is placed on the plate.
+* The gripper is open.
+* The end-effector is positioned above the cup.
+
+### 🎮 Keyboard Controls
+
+* `W/A/S/D`: Move along the **x-y plane**
+* `R/F`: Move along the **z-axis**
+* `Q/E`: Tilt the end-effector
+* `Arrow Keys`: Rotate the end-effector
+* `Space`: Toggle the gripper state
+* `Z`: Reset the environment and discard the cached data from the current episode
+
+### 🖥️ Observation Views
+
+The rendered observation contains four views:
+
+* **Top-right:** Agent view
+* **Bottom-right:** First-person wrist camera view
+* **Top-left:** Side view
+* **Bottom-left:** Top-down view
+
 
 ## 🤖 ACT — Action Chunking with Transformers
 
