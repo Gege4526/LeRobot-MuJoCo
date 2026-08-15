@@ -3,6 +3,20 @@
 ## Setup
 ```bash
 conda create -n py310 python=3.10
+conda activate py310
+```
+```bash
+git clone git@github.com:Gege4526/LeRobot-MuJoCo.git
+cd ~/LeRobot-MuJoCo
+pip install -r requirements.txt
+conda install jupyterlab
+pip install ipywidgets ipykernel
+python -m ipykernel install --user --name py310 --display-name "py310"
+jupyter lab .
+```
+```bash
+cd asset/objaverse
+unzip plate_11.zip
 ```
 
 ## 🤖 ACT — Action Chunking with Transformers
