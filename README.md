@@ -1,4 +1,4 @@
-# Training ACT, SmolVLA, and Pi0 with LeRobot in MuJoCo
+# Training ACT with LeRobot in MuJoCo
 
 ## Table of Contents
 - [Setup](#setup)
