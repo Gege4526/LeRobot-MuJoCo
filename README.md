@@ -181,6 +181,8 @@ These predictions are combined using a **weighted average**, with more recent pr
 **Paper**
 https://arxiv.org/abs/2304.13705
 
+Repo from [Every-Embodied](https://github.com/datawhalechina/every-embodied/tree/main/06-%E7%AD%96%E7%95%A5%E6%8A%93%E5%8F%96%E6%88%96%E6%8A%93%E5%8F%96VLA/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A7%E5%88%B6%E3%80%81VLA%E3%80%81VLM/04mujoco%E5%A4%8D%E7%8E%B0ACT%E3%80%81Pi0%E3%80%81SmolVLA)
+
 
 
 
