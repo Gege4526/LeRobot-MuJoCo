@@ -34,6 +34,11 @@ unzip plate_11.zip
 
 Run the `1.collect_data.ipynb` notebook to collect demonstration data in the provided environment.
 
+<p align="center">
+  <img src="pics/sample_data.gif" width="600">
+</p>
+
+
 The task is to **pick up the cup and place it onto the plate**. The environment considers the task successful when:
 
 * The cup is placed on the plate.
@@ -109,17 +114,22 @@ Run `3.train.ipynb` to train an **Action Chunking Transformer (ACT)** on the col
 
 Training takes approximately **30–60 minutes**, depending on your hardware and dataset size.
 
-In this example, ACT is trained with:
+In this example, ACT is trained with:```chunk_size = 10```
 
-```python
-chunk_size = 10
-```
+The trained checkpoint will be saved to:```./ckpt/act_y```
 
-The trained checkpoint will be saved to:
+## 4. Deploy your Policy
 
-```text
-./ckpt/act_y
-```
+Run `4.deploy.ipynb`
+
+<p align="center">
+  <img src="pics/pred_vs_gt.png" width="600">
+</p>
+
+<p align="center">
+  <img src="pics/deploy.gif" width="600">
+</p>
+
 
 ## 📚 Theory
 ### ➡️ ACT — Action Chunking with Transformers
@@ -162,7 +172,7 @@ For each timestep, the same action can be predicted multiple times from overlapp
 These predictions are combined using a **weighted average**, with more recent predictions receiving higher weights.
 
 <p align="center">
-  <img src="Assets/algo.jpg" width="900">
+  <img src="pics/algo.jpg" width="900">
 </p>
 
 > [!NOTE]
@@ -174,7 +184,7 @@ These predictions are combined using a **weighted average**, with more recent pr
 > Image Features (CNN) + Joint State + $z=0$ → Transformer → Action Chunk
 
 <p align="center">
-  <img src="Assets/detail_architecture.jpg" width="900">
+  <img src="pics/detail_architecture.jpg" width="900">
 </p>
 
 #### Reference
